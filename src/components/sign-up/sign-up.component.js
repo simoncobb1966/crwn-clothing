@@ -20,6 +20,8 @@ class SignUp extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
     const { displayName, email, password, confirmPassword } = this.state;
+    console.log("should clear state1");
+    this.setState({ email: "", password: "" });
 
     if (password !== confirmPassword) {
       alert("passwords don't match");
@@ -32,12 +34,12 @@ class SignUp extends React.Component {
         password
       );
       await createUserProfileDocument(user, { displayName });
-      this.state = {
+      this.setState({
         displayName: "",
         email: "",
         password: "",
         confirmPassword: "",
-      };
+      });
     } catch (error) {
       console.error(error);
     }

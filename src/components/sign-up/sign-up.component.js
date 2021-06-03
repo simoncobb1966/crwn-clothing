@@ -14,17 +14,16 @@ class SignUp extends React.Component {
       email: "",
       password: "",
       confirmPassword: "",
+      errorMessage: "",
     };
   }
 
   handleSubmit = async (event) => {
     event.preventDefault();
     const { displayName, email, password, confirmPassword } = this.state;
-    console.log("should clear state1");
-    this.setState({ email: "", password: "" });
-
     if (password !== confirmPassword) {
-      alert("passwords don't match");
+      // alert("passwords don't match");
+      this.setState({ errorMessage: "Passwords don't match" });
       return;
     }
 
@@ -39,15 +38,16 @@ class SignUp extends React.Component {
         email: "",
         password: "",
         confirmPassword: "",
+        errorMessage: "",
       });
     } catch (error) {
-      console.error(error);
+      this.setState({ errorMessage: error.message });
     }
   };
 
   handleChange = (event) => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, errorMessage: "" });
   };
 
   render() {
@@ -89,6 +89,7 @@ class SignUp extends React.Component {
             label="Confirm Password"
             required
           />
+          <h3 className="errorMessage">{this.state.errorMessage}</h3>
           <CustomButton type="submit">SIGN UP</CustomButton>
         </form>
       </div>
